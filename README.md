@@ -1,6 +1,12 @@
 # Now Playing Retriever
 
-https://user-images.githubusercontent.com/6278531/149660344-6e381a41-6dad-4fea-b54f-d42108394e13.mp4
+Apple Music Demo:
+
+https://user-images.githubusercontent.com/6278531/150859735-c3f6f14e-bc20-42c4-b608-ad9a017ec1c5.mp4
+
+YouTube Demo:
+
+https://user-images.githubusercontent.com/6278531/150859952-ddee4566-2003-4233-a516-126186f4ae9b.mp4
 
 Now Playing Retriever is a simple Mac app that listens for changes in the system's "Now Playing" data in the control center.
 It then saves that data to files within its container, which can be symlinked to in order to access them.
