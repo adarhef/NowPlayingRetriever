@@ -80,10 +80,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             getIsPlaying(.main) { [self] isPlaying in
                 guard isPlaying else {
                     currentTrack = ""
-                    try! write(data: Data(), fileName: "artist", fileExtension: "txt")
-                    try! write(data: Data(), fileName: "track", fileExtension: "txt")
-                    try! write(data: Data(), fileName: "album", fileExtension: "txt")
-                    try! write(data: Data(), fileName: "artwork", fileExtension: "jpg")
+                    delete(fileName: "artist", fileExtension: "txt")
+                    delete(fileName: "track", fileExtension: "txt")
+                    delete(fileName: "album", fileExtension: "txt")
+                    delete(fileName: "artwork", fileExtension: "jpg")
                     return
                 }
                 if let title = information["kMRMediaRemoteNowPlayingInfoTitle"] as? String {
@@ -92,42 +92,52 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     }
                     currentTrack = title
                     if let data = title.data(using: .utf8) {
-                        try? write(data: data, fileName: "track", fileExtension: "txt")
+                        write(data: data, fileName: "track", fileExtension: "txt")
                     }
+                } else {
+                    delete(fileName: "track", fileExtension: "txt")
                 }
                 if let artist = information["kMRMediaRemoteNowPlayingInfoArtist"] as? String,
                     let data = artist.data(using: .utf8) {
-                    try? write(data: data, fileName: "artist", fileExtension: "txt")
+                    write(data: data, fileName: "artist", fileExtension: "txt")
+                } else {
+                    delete(fileName: "artist", fileExtension: "txt")
                 }
                 if let album = information["kMRMediaRemoteNowPlayingInfoAlbum"] as? String,
                    let data = album.data(using: .utf8) {
-                    try? write(data: data, fileName: "album", fileExtension: "txt")
+                    write(data: data, fileName: "album", fileExtension: "txt")
+                } else {
+                    delete(fileName: "album", fileExtension: "txt")
                 }
                 if let artwork = information["kMRMediaRemoteNowPlayingInfoArtworkData"] as? Data {
                     switch information["kMRMediaRemoteNowPlayingInfoArtworkMIMEType"] as? String {
                     case "image/jpeg":
-                        try! write(data: artwork, fileName: "artwork", fileExtension: "jpg")
+                        write(data: artwork, fileName: "artwork", fileExtension: "jpg")
                     default:
                         guard let representation = NSImage(data: artwork)?.representations.first as? NSBitmapImageRep,
                               let jpegData = representation.representation(using: .jpeg, properties: [:])
                         else { break }
                         
-                        try! write(data: jpegData, fileName: "artwork", fileExtension: "jpg")
+                        write(data: jpegData, fileName: "artwork", fileExtension: "jpg")
                     }
                 } else {
-                    try! write(data: Data(), fileName: "artwork", fileExtension: "jpg")
+                    delete(fileName: "artwork", fileExtension: "jpg")
                 }
             }
         }
     }
     
-    private func write(data: Data, fileName: String, fileExtension: String) throws {
+    private func write(data: Data, fileName: String, fileExtension: String) {
         let fileUrl = FileManager.default
             .homeDirectoryForCurrentUser
             .appendingPathComponent(fileName)
             .appendingPathExtension(fileExtension)
         
-        try data.write(to: fileUrl)
+        try? data.write(to: fileUrl)
+    }
+    
+    private func delete(fileName: String, fileExtension: String) {
+        write(data: Data(), fileName: fileName, fileExtension: fileExtension)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
