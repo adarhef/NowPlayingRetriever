@@ -1,6 +1,6 @@
 # Now Playing Retriever
 
-Demo with my Now Playing widget for OBS:
+Demo with my [Now Playing widget](https://github.com/adarhef/NowPlaying) in OBS:
 
 https://user-images.githubusercontent.com/6278531/151031011-5ad112d1-5cf3-4bb6-ab33-8c0542a98cf6.mp4
 
