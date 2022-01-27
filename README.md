@@ -20,8 +20,9 @@ You'll now need to setup symlinks to access the internal files.
 
 For example, if you're using this with [my widget](https://github.com/adarhef/NowPlaying):
 * Take the `setup_file_links_example.sh` file and paste it in the `Snip` folder.
-* Open `Terminal`, cd to the widget's `Snip` folder
-* run `chmod +x setup_file_links_example.sh` and then `./setup_file_links_example.sh`
+* Open `Terminal`, cd to the widget's `Snip` folder.
+* Delete `Snip_Artist.txt`,`Snip_Album.txt`,`Snip_Artwork.jpg` and `Snip_Track.txt` if they exit.
+* run `chmod +x setup_file_links_example.sh` and then `./setup_file_links_example.sh`.
 
 ## Usage
 
